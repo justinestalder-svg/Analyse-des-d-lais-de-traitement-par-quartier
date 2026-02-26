@@ -12,12 +12,9 @@ Ce projet analyse les délais de traitement par quartier.
 - SQL
 - Node.js
 
-## Comment lancer le projet
 
-```bash
-docker compose up -d
 
-# Modélisation de la Base de Données (MCD)
+## Modélisation de la Base de Données (MCD)
 
 Le schéma conceptuel de données (MCD) est composé des tables suivantes :
 
@@ -201,15 +198,4 @@ Un technicien peut réaliser plusieurs interventions.
 
 La clé étrangère `techniciens_id` est dans `interventions`.
 
----
 
-# Relations du schéma
-
-| Relation | Cardinalité | Clé étrangère | Justification |
-|---------|-------------|--------------|--------------|
-| quartiers → inventaires_mobiliers | 1 → 0..* | inventaires_mobiliers | Un quartier contient plusieurs mobiliers |
-| inventaires_mobiliers → signalements | 1 → 0..* | signalements | Un mobilier peut avoir plusieurs signalements |
-| signalements → interventions | 1 → 0..* | interventions | Un signalement peut ne pas avoir d'intervention |
-| fournisseurs_de_contact → techniciens | 1 → 0..* | techniciens | Un fournisseur emploie plusieurs techniciens |
-| fournisseurs_de_contact → interventions | 1 → 0..* | interventions | Un fournisseur réalise plusieurs interventions |
-| techniciens → interventions | 1 → 0..* | interventions | Un technicien réalise plusieurs interventions |
