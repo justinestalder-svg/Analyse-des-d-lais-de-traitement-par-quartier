@@ -283,7 +283,7 @@
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-23" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="date_installation {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" x="10" y="40" as="geometry" />
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-24" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="etat {NOT NULL}" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-24" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK etat_id {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" x="10" y="60" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-25" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="remarque" vertex="1">
@@ -292,7 +292,7 @@
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-26" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="FK type_id {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" x="10" y="110" as="geometry" />
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-27" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="materiel" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-27" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="FK materiel_id {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" x="10" y="130" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-28" parent="Ig_Bwu8nRR3nwBBhYGdf-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="lieu {NOT NULL}" vertex="1">
@@ -325,7 +325,7 @@
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-37" parent="Ig_Bwu8nRR3nwBBhYGdf-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="urgence {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" y="170" as="geometry" />
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-38" parent="Ig_Bwu8nRR3nwBBhYGdf-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK statue_id {NOT NULL}" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-38" parent="Ig_Bwu8nRR3nwBBhYGdf-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK statut_id {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" y="200" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-39" parent="Ig_Bwu8nRR3nwBBhYGdf-32" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK inventaires_mobiliers_id {NOT NULL}" vertex="1">
@@ -349,7 +349,7 @@
             <mxPoint x="1972" y="480" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-48" parent="1" style="swimlane;whiteSpace=wrap;html=1;" value="quartiers" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-48" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="quartiers" vertex="1">
           <mxGeometry height="126" width="204" x="1410" y="480" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-49" parent="Ig_Bwu8nRR3nwBBhYGdf-48" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="PK id {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
@@ -360,6 +360,9 @@
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-51" parent="Ig_Bwu8nRR3nwBBhYGdf-48" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="description" vertex="1">
           <mxGeometry height="30" width="200" x="4" y="85" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-97" edge="1" parent="1" source="Ig_Bwu8nRR3nwBBhYGdf-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" target="Ig_Bwu8nRR3nwBBhYGdf-94">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-52" parent="1" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" value="techniciens" vertex="1">
           <mxGeometry height="180" width="204" x="1802" y="980" as="geometry" />
@@ -373,7 +376,7 @@
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-55" parent="Ig_Bwu8nRR3nwBBhYGdf-52" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="prenom {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" y="80" as="geometry" />
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-56" parent="Ig_Bwu8nRR3nwBBhYGdf-52" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="specialite {NOT NULL}" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-56" parent="Ig_Bwu8nRR3nwBBhYGdf-52" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK specialite_id {NOT NULL}" vertex="1">
           <mxGeometry height="30" width="200" y="110" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-57" parent="Ig_Bwu8nRR3nwBBhYGdf-52" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="FK fournisseurs_de_contact_id {NOT NULL}" vertex="1">
@@ -394,7 +397,7 @@
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-65" edge="1" parent="1" source="Ig_Bwu8nRR3nwBBhYGdf-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="Ig_Bwu8nRR3nwBBhYGdf-56">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-68" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="statues" vertex="1">
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-68" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="statuts" vertex="1">
           <mxGeometry height="90" width="210" x="2060" y="220" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-73" parent="Ig_Bwu8nRR3nwBBhYGdf-68" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="PK id {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
@@ -446,6 +449,41 @@
           <mxGeometry height="30" width="200" x="5" y="55" as="geometry" />
         </mxCell>
         <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-87" edge="1" parent="1" source="Ig_Bwu8nRR3nwBBhYGdf-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="Ig_Bwu8nRR3nwBBhYGdf-84">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-88" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="materiels" vertex="1">
+          <mxGeometry height="90" width="210" x="1180" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-98" edge="1" parent="Ig_Bwu8nRR3nwBBhYGdf-88" source="Ig_Bwu8nRR3nwBBhYGdf-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="27.333333333333258" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-89" parent="Ig_Bwu8nRR3nwBBhYGdf-88" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="PK id {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-90" parent="Ig_Bwu8nRR3nwBBhYGdf-88" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="libelle {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="5" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-91" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="etats" vertex="1">
+          <mxGeometry height="90" width="210" x="1180" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-92" parent="Ig_Bwu8nRR3nwBBhYGdf-91" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="PK id {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-93" parent="Ig_Bwu8nRR3nwBBhYGdf-91" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="libelle {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="5" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-94" parent="1" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1D5E7;" value="specialites" vertex="1">
+          <mxGeometry height="90" width="210" x="2020" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-95" parent="Ig_Bwu8nRR3nwBBhYGdf-94" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="PK id {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="10" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-96" parent="Ig_Bwu8nRR3nwBBhYGdf-94" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontFamily=Helvetica;fontSize=12;fontColor=default;" value="libelle {&lt;span class=&quot;token token&quot; style=&quot;color: rgb(20, 24, 31);&quot;&gt;NOT&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(0, 128, 128);&quot;&gt;NULL&lt;/span&gt; &lt;span class=&quot;token token&quot; style=&quot;color: rgb(129, 0, 194);&quot;&gt;UNIQUE}&lt;/span&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="5" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="Ig_Bwu8nRR3nwBBhYGdf-99" edge="1" parent="1" source="Ig_Bwu8nRR3nwBBhYGdf-93" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="Ig_Bwu8nRR3nwBBhYGdf-22">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
       </root>
