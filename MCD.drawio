@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.6.1">
   <diagram name="Page-1" id="qI_i529aqIQb4XtuPHaz">
-    <mxGraphModel dx="1796" dy="984" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1143" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -452,10 +452,10 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="KaxJKvIV5xf2s8ch7RQ2-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="0..*" vertex="1">
-          <mxGeometry height="30" width="60" x="290" y="230" as="geometry" />
+          <mxGeometry height="30" width="60" x="290" y="240" as="geometry" />
         </mxCell>
         <mxCell id="KaxJKvIV5xf2s8ch7RQ2-7" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="1" vertex="1">
-          <mxGeometry height="30" width="60" x="400" y="500" as="geometry" />
+          <mxGeometry height="30" width="60" x="400" y="493" as="geometry" />
         </mxCell>
         <mxCell id="KaxJKvIV5xf2s8ch7RQ2-8" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=0;" target="Ig_Bwu8nRR3nwBBhYGdf-18">
           <mxGeometry relative="1" as="geometry">
@@ -488,7 +488,7 @@
           <mxGeometry height="40" width="80" x="170" y="380" as="geometry" />
         </mxCell>
         <mxCell id="KaxJKvIV5xf2s8ch7RQ2-24" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;fait l’objet d’une&lt;/b&gt;" vertex="1">
-          <mxGeometry height="40" width="90" x="295" y="250" as="geometry" />
+          <mxGeometry height="40" width="90" x="295" y="260" as="geometry" />
         </mxCell>
         <mxCell id="KaxJKvIV5xf2s8ch7RQ2-25" parent="1" style="text;whiteSpace=wrap;html=1;" value="&lt;b&gt;intervient sur&lt;/b&gt;" vertex="1">
           <mxGeometry height="40" width="100" x="364" y="523" as="geometry" />
