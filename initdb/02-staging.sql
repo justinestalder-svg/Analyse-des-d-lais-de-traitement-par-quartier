@@ -1,9 +1,5 @@
-CREATE SCHEMA IF NOT EXISTS staging;
-
-DROP TABLE IF EXISTS staging.inventaire_mobilier CASCADE;
-DROP TABLE IF EXISTS staging.interventions CASCADE;
-DROP TABLE IF EXISTS staging.signalements CASCADE;
-DROP TABLE IF EXISTS staging.fournisseurs_contacts CASCADE;
+DROP SCHEMA IF EXISTS staging CASCADE;
+CREATE SCHEMA staging;
 
 CREATE TABLE staging.inventaire_mobilier (
     id TEXT,
@@ -17,14 +13,13 @@ CREATE TABLE staging.inventaire_mobilier (
     remarques TEXT
 );
 
-CREATE TABLE staging.interventions (
-    date TEXT,
-    objet TEXT,
-    type_intervention TEXT,
-    technicien TEXT,
-    duree TEXT,
-    cout_materiel TEXT,
-    remarques TEXT
+CREATE TABLE staging.inventaire_mobilier_quartiers (
+    id TEXT,
+    type TEXT,
+    lieu TEXT,
+    quartier TEXT,
+    latitude TEXT,
+    longitude TEXT
 );
 
 CREATE TABLE staging.signalements (
@@ -36,6 +31,23 @@ CREATE TABLE staging.signalements (
     statut TEXT
 );
 
+CREATE TABLE staging.interventions (
+    date TEXT,
+    objet TEXT,
+    type_intervention TEXT,
+    technicien TEXT,
+    duree TEXT,
+    cout_materiel TEXT,
+    remarques TEXT
+);
+
+CREATE TABLE staging.fournisseur_inventaire (
+    id_inventaire TEXT,
+    type TEXT,
+    materiau TEXT,
+    entreprise TEXT
+);
+
 CREATE TABLE staging.fournisseurs_contacts (
     entreprise TEXT,
     contact TEXT,
@@ -45,4 +57,39 @@ CREATE TABLE staging.fournisseurs_contacts (
     remarques TEXT
 );
 
-SELECT 'Schéma staging créé avec succès' AS message;
+CREATE TABLE staging.techniciens_contacts (
+    nom TEXT,
+    prenom TEXT,
+    telephone TEXT,
+    email TEXT,
+    specialite TEXT,
+    remarques TEXT
+);
+
+COPY staging.inventaire_mobilier
+FROM '/data/inventaire_mobilier.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.inventaire_mobilier_quartiers
+FROM '/data/inventaire_mobilier_quartiers.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.signalements
+FROM '/data/signalements.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.interventions
+FROM '/data/interventions.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.fournisseur_inventaire
+FROM '/data/fournisseur_inventaire.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.fournisseurs_contacts
+FROM '/data/fournisseurs_contacts.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
+
+COPY staging.techniciens_contacts
+FROM '/data/techniciens_contacts.csv'
+WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'UTF8');
