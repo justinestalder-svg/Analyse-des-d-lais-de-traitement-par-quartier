@@ -1,6 +1,5 @@
 -- =========================================================
 -- 03-NETTOYAGE.SQL
--- Remplissage du MLD depuis staging
 -- =========================================================
 
 TRUNCATE TABLE
@@ -151,7 +150,6 @@ WHERE type_materiel IS NOT NULL
   AND TRIM(type_materiel) <> '';
 
 
--- FOURNISSEURS DE CONTACT
 -- =========================================================
 -- FOURNISSEURS DE CONTACT
 -- =========================================================
@@ -203,7 +201,6 @@ WHERE f.entreprise IS NOT NULL
 
 
 
--- INVENTAIRES MOBILIERS
 -- =========================================================
 -- INVENTAIRES MOBILIERS
 -- =========================================================
@@ -398,16 +395,6 @@ JOIN statuts st
 WHERE s.objet IS NOT NULL
   AND TRIM(s.objet) <> '';
 
-
--- =========================================================
--- INTERVENTIONS
--- =========================================================
--- =========================================================
--- INTERVENTIONS
--- =========================================================
--- =========================================================
--- INTERVENTIONS
--- =========================================================
 TRUNCATE TABLE interventions RESTART IDENTITY;
 -- =========================================================
 -- INTERVENTIONS
@@ -534,6 +521,7 @@ JOIN types_interventions ti
     ON LOWER(TRIM(ti.libelle)) = LOWER(TRIM(c.type_intervention))
 
 WHERE rn = 1;
+
 -- VERIFICATION
 SELECT 'types' AS table_nom, COUNT(*) FROM types
 UNION ALL
