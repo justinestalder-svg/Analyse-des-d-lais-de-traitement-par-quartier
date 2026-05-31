@@ -39,16 +39,16 @@ LEFT JOIN interventions i
 
 GROUP BY q.nom
 
-ORDER BY delai_moyen_jours DESC;
+ORDER BY delai_moyen_jours DESC NULLS LAST;
 
 SELECT *
 FROM v_delai_par_quartier;
+
 -- ===========================================================
 -- LIVRABLE 2
 -- Signalements ouverts depuis plus de 30 jours
 -- ===========================================================
 
-DROP VIEW IF EXISTS v_signalements_ouverts;
 CREATE OR REPLACE VIEW v_signalements_ouverts AS
 SELECT
     s.date AS date_signalement,
@@ -75,28 +75,14 @@ WHERE st.libelle IN ('en attente', 'en cours')
 
 ORDER BY s.date ASC;
 
-SELECT COUNT(DISTINCT signalement_id)
-
-    AS signalements_avec_intervention
-
-FROM interventions;
-
-SELECT COUNT(*) AS signalements_sans_intervention
-
-FROM signalements s
-
-LEFT JOIN interventions i
-
-    ON i.signalement_id = s.id
-
-WHERE i.id IS NULL;
+SELECT *
+FROM v_signalements_ouverts;
 
 -- ===========================================================
 -- LIVRABLE 3
 -- Taux de résolution par trimestre
 -- ===========================================================
 
-DROP VIEW IF EXISTS v_taux_resolution;
 CREATE OR REPLACE VIEW v_taux_resolution AS
 SELECT
     EXTRACT(YEAR FROM s.date)::INT AS annee,
@@ -127,7 +113,6 @@ ORDER BY
     annee,
     trimestre;
 
-
 SELECT
     annee,
     trimestre,
@@ -135,24 +120,45 @@ SELECT
     nombre_signalements_resolus,
     taux_resolution_pourcent
 FROM v_taux_resolution;
+
 -- ===========================================================
 -- INTERPRÉTATION DES RÉSULTATS
 -- ===========================================================
 /*
-L’analyse des délais de traitement met en évidence des différences entre les quartiers d’Yverdon. 
-Certains quartiers présentent un nombre plus élevé de signalements ainsi qu’un délai moyen d’intervention 
-plus important. Cela peut indiquer une surcharge des équipes techniques ou une priorité 
-différente selon le type de mobilier concerné. Le délai médian permet également de limiter l’influence 
-des cas exceptionnels très longs et donne une vision plus représentative du temps de traitement habituel.
+LIVRABLE 1 — Délais par quartier
 
-La vue des signalements ouverts montre plusieurs demandes encore en attente ou en cours depuis plus de 30 jours. 
-Ces signalements concernent principalement des lampadaires, des bancs ou des fontaines situés dans différents 
-quartiers. Ces données permettent d’identifier les zones nécessitant une intervention prioritaire et d’améliorer 
-l’organisation des interventions futures.
+Les délais de traitement varient fortement d'un quartier à l'autre.
+Maillefer affiche le délai moyen le plus élevé avec environ 414 jours,
+suivi de Perreux (380 jours) et du Centre-Ville (263 jours). Les quartiers
+Rives (218 jours) et Les Bains (207 jours) sont les mieux traités.
 
-Enfin, l’analyse du taux de résolution par trimestre montre l’évolution de l’efficacité des services techniques. 
-Certains trimestres présentent un taux de résolution élevé, indiquant une bonne capacité de traitement des 
-incidents, tandis que d’autres montrent une accumulation de signalements non résolus. Ces indicateurs 
-permettent à la municipalité de suivre la qualité du service et d’adapter les ressources techniques 
-selon les besoins observés.
+Le délai médian est particulièrement utile ici : à Perreux, la médiane
+(440 jours) dépasse la moyenne, ce qui indique que plus de la moitié des
+signalements attendent plus d'un an avant intervention — la situation y est
+donc encore plus grave que la moyenne ne le laisse paraître.
+
+Concernant la plainte spécifique sur le quartier de la Gare, ce quartier
+ne ressort pas comme le plus problématique en termes de délais bruts, mais
+le Centre-Ville (qui inclut la zone Gare) concentre à lui seul la majorité
+des signalements (126 sur 203), ce qui peut expliquer un sentiment de lenteur
+chez les habitants malgré un délai moyen plus modéré.
+
+LIVRABLE 2 — Signalements ouverts
+
+128 signalements sont actuellement ouverts (statut "en attente" ou "en cours")
+depuis plus de 30 jours. Cela représente plus de 60 % du total des signalements,
+ce qui révèle un retard structurel important dans le traitement des demandes.
+Ces signalements non traités concernent tous les quartiers et tous types de
+mobilier. Une priorisation par quartier et par type de mobilier serait
+recommandée pour résorber ce stock.
+
+LIVRABLE 3 — Taux de résolution par trimestre
+
+Le taux de résolution est globalement faible et irrégulier. Les meilleurs
+trimestres sont Q3 2022 (100 %, mais seulement 2 signalements) et Q4 2022
+(75 %). À partir de 2023, avec l'augmentation du volume de signalements, le
+taux oscille entre 23 % et 50 %. Les trimestres récents (2025) montrent une
+tendance à la baisse, autour de 26-31 %, ce qui suggère que les équipes
+peinent à absorber le volume croissant de demandes. Une révision des ressources
+disponibles ou des priorités d'intervention semble nécessaire.
 */
