@@ -1,230 +1,175 @@
-# Analyse des Délais de Traitement par Quartier — Mobilier Urbain
-
-## 📋 Présentation du projet
-
-Ce projet SQL analyse les délais de traitement des signalements liés au mobilier urbain dans la ville d’Yverdon-les-Bains.
-
-L’objectif principal est d’identifier les quartiers où les interventions prennent le plus de temps afin d’améliorer la gestion des réparations et la maintenance du mobilier public.
-
-Le projet repose sur un pipeline ETL simple utilisant PostgreSQL, Docker et plusieurs fichiers CSV contenant les données brutes.
+# Analyse des délais de traitement par quartier
+**Gestion du mobilier urbain — Yverdon-les-Bains**
 
 ---
 
-# 🎯 Objectifs
+## Contexte
 
-L’analyse permet notamment de répondre aux questions suivantes :
-
-* Quels quartiers présentent les délais de traitement les plus longs ?
-* Combien de signalements restent ouverts après 30 jours ?
-* Quel est le taux de résolution des signalements par trimestre ?
-* Existe-t-il des différences importantes entre les quartiers ?
-* Les interventions suivent-elles correctement les signalements ?
+Ce projet analyse les délais de traitement des signalements de mobilier urbain (bancs, lampadaires, fontaines, bornes, poubelles, panneaux) dans la ville d'Yverdon-les-Bains. L'objectif est de comprendre combien de temps s'écoule entre un signalement et l'intervention correspondante, et d'identifier les quartiers les plus en difficulté.
 
 ---
 
-# 🗂️ Structure du projet
+## Structure du projet
 
-```text
-Analyse-des-delais-de-traitement-par-quartier/
-│
-├── data/
-│   ├── fournisseurs_contacts.csv
-│   ├── interventions.csv
-│   ├── inventaire_mobilier.csv
-│   └── signalements.csv
-│
-├── initdb/
-│   ├── 01-schema.sql
-│   ├── 02-staging.sql
-│   ├── 03-nettoyage.sql
-│   └── 04-briefB.sql
-│
-├── docker-compose.yml
-├── README.md
-└── MCD.drawio
+```
+initdb/
+├── 01-schema.sql       # Création des tables (MLD final)
+├── 02-staging.sql      # Schéma de staging (import brut des CSV)
+├── 03-nettoyage.sql    # Nettoyage et transfert staging → MLD
+└── 04-briefB.sql       # Vues et analyses (livrables)
+data/
+├── inventaire_mobilier.csv
+├── inventaire_mobilier_quartiers.csv
+├── signalements.csv
+├── interventions.csv
+├── fournisseurs_contacts.csv
+├── fournisseur_inventaire.csv
+└── techniciens_contacts.csv
 ```
 
 ---
 
-# ⚙️ Technologies utilisées
+## Étapes réalisées
 
-* PostgreSQL 16
-* SQL
-* Docker / Docker Compose
-* DBeaver
-* Git / GitHub
+### 1. Import des données brutes en staging
 
----
+Les fichiers CSV ont d'abord été chargés tels quels dans un schéma `staging`, sans transformation. Cela permet de conserver les données originales intactes et de travailler le nettoyage séparément.
 
-# 🚀 Installation du projet
-
-## 1️⃣ Cloner le repository
-
-```bash
-git clone https://github.com/justinestalder-svg/Analyse-des-d-delais-de-traitement-par-quartier.git
-```
-
-## 2️⃣ Accéder au dossier
-
-```bash
-cd Analyse-des-delais-de-traitement-par-quartier
-```
-
-## 3️⃣ Lancer Docker
-
-```bash
-docker compose up -d
-```
+Les tables staging reproduisent exactement la structure des CSV (colonnes en `TEXT`, séparateur `;`).
 
 ---
 
-# 📥 Données utilisées
+### 2. Nettoyage et normalisation (`03-nettoyage.sql`)
 
-Le projet utilise plusieurs fichiers CSV :
+Les données brutes présentaient plusieurs problèmes qu'il a fallu corriger avant d'insérer dans le MLD final.
 
-| Fichier                     | Description                   |
-| --------------------------- | ----------------------------- |
-| `signalements.csv`          | Signalements des citoyens     |
-| `interventions.csv`         | Interventions réalisées       |
-| `inventaire_mobilier.csv`   | Inventaire du mobilier urbain |
-| `fournisseurs_contacts.csv` | Fournisseurs et contacts      |
+#### Données manquantes et valeurs vides
+- Les champs vides ont été remplacés par des valeurs par défaut cohérentes (ex. : état inconnu → `'bon'`, statut vide → `'en attente'`, urgence vide → `'normale'`).
+- Les champs non renseignés ont été convertis en `NULL` avec `NULLIF`.
 
----
+#### Formats de dates incohérents
+Les CSV contenaient deux formats de dates mélangés :
+- `YYYY-MM-DD` (ex. : `2024-07-08`)
+- `DD.MM.YYYY` (ex. : `08.05.2022`)
 
-# 🧱 Pipeline ETL
-
-Le projet suit une logique ETL en plusieurs étapes :
-
-```text
-CSV → STAGING → NETTOYAGE → ANALYSE
+Traitement appliqué :
+```sql
+CASE
+    WHEN TRIM(date) LIKE '____-__-__' THEN TO_DATE(TRIM(date), 'YYYY-MM-DD')
+    WHEN TRIM(date) LIKE '%.%.%'      THEN TO_DATE(TRIM(date), 'DD.MM.YYYY')
+    ELSE NULL
+END
 ```
 
-## 1. `01-schema.sql`
+#### Libellés dupliqués ou orthographes variables
+De nombreux libellés désignaient la même chose avec des orthographes différentes. Des regroupements ont été appliqués :
 
-Création des tables et de la structure de la base de données.
+| Valeurs brutes | Valeur normalisée |
+|---|---|
+| `borne ev`, `borne recharge`, `borne recharge ev` | `borne` |
+| `banc public`, `banc` | `banc` |
+| `lampadaire led`, `lampadaire sodium` | `lampadaire` |
+| `fontaine`, `fontaine publique` | `fontaine` |
+| `panneau info`, `panneau affichage` | `panneau` |
+| `corbeille`, `poubelle tri`, `poubelle` | `poubelle` |
+| `metal`, `métal` | `métal` |
+| `bon`, `bon état`, `correct` | `bon` |
+| `fait`, `résolu`, `fermé` | `résolu` |
 
-## 2. `02-staging.sql`
+#### Noms de techniciens
+Plusieurs variantes désignaient les mêmes personnes (`jm`, `jean-marc`, `Jean-Marc Bonvin` → `Jean-Marc Bonvin`).
 
-Import des données brutes CSV dans des tables temporaires.
-
-## 3. `03-nettoyage.sql`
-
-Nettoyage et normalisation des données :
-
-* suppression des doublons
-* uniformisation des textes
-* gestion des NULL
-* conversion des types
-* nettoyage des dates
-
-## 4. `04-briefB.sql`
-
-Création des vues analytiques demandées dans le Brief B.
+#### Coordonnées GPS
+Certaines coordonnées utilisaient une virgule comme séparateur décimal (`46,77932`) au lieu d'un point. Traitement :
+```sql
+NULLIF(REPLACE(TRIM(latitude), ',', '.'), '')::NUMERIC
+```
 
 ---
 
-# 📊 Analyses réalisées
+### 3. Volumétrie finale
 
-## ✅ Livrable 1 — Délais par quartier
+| Table | Nombre d'enregistrements |
+|---|---|
+| inventaires_mobiliers | 120 |
+| signalements | 203 |
+| interventions | 150 |
+| fournisseurs_de_contact | 13 |
 
-Vue SQL :
+---
+
+### 4. La difficulté principale : relier interventions et signalements
+
+C'est la partie la plus complexe du projet. **Les données sources ne contenaient aucun identifiant commun** entre les interventions et les signalements — il était donc impossible de faire une jointure directe.
+
+La solution adoptée repose sur le **mobilier urbain comme table pivot**.
+
+#### Étape 1 — Relier les signalements aux mobiliers (via `JOIN LATERAL`)
+
+Le champ `objet` des signalements contenait soit l'identifiant du mobilier, soit une description textuelle de son emplacement. La jointure a été faite par correspondance textuelle :
 
 ```sql
-v_delai_par_quartier
+JOIN LATERAL (
+    SELECT im.id
+    FROM inventaires_mobiliers im
+    LEFT JOIN types t ON t.id = im.type_id
+    WHERE LOWER(TRIM(s.objet)) = LOWER(TRIM(im.id))
+       OR LOWER(TRIM(s.objet)) LIKE '%' || LOWER(TRIM(im.lieu)) || '%'
+    ORDER BY
+        CASE
+            WHEN LOWER(TRIM(s.objet)) = LOWER(TRIM(im.id)) THEN 0
+            WHEN LOWER(TRIM(s.objet)) LIKE '%' || LOWER(TRIM(t.libelle)) || '%' THEN 1
+            ELSE 2
+        END,
+        LENGTH(im.lieu) DESC
+    LIMIT 1
+) im ON true
 ```
 
-Cette vue affiche :
+Le `JOIN LATERAL` avec `LIMIT 1` garantit qu'on prend le meilleur match disponible (d'abord par ID exact, ensuite par lieu).
 
-* le nombre de signalements
-* le nombre d’interventions
-* le délai moyen de traitement
-* le délai médian
-* les quartiers concernés
+#### Étape 2 — Relier les interventions aux mobiliers
 
-### Méthode utilisée
-
-Chaque signalement est relié uniquement à la première intervention correspondante afin d’éviter les doublons.
-
----
-
-## ✅ Livrable 2 — Signalements ouverts depuis plus de 30 jours
-
-Vue SQL :
+Le champ `objet` des interventions suivait le format `type lieu` (ex. : `Banc Chemin de Maillefer`). On a reconstruit dynamiquement ce libellé depuis le type et le lieu du mobilier pour faire la correspondance :
 
 ```sql
-v_signalements_ouverts
+WHERE LOWER(TRIM(i.objet)) = LOWER(
+    CASE
+        WHEN t.libelle = 'banc'      THEN 'banc ' || im.lieu
+        WHEN t.libelle = 'lampadaire' THEN 'lampadaire ' || im.lieu
+        WHEN t.libelle = 'fontaine'  THEN 'fontaine ' || im.lieu
+        WHEN t.libelle = 'borne'     THEN 'borne ev ' || im.lieu
+        WHEN t.libelle = 'panneau'   THEN 'panneau ' || im.lieu
+        WHEN t.libelle = 'poubelle'  THEN 'poubelle ' || im.lieu
+        ELSE im.lieu
+    END
+)
 ```
 
-Cette vue permet d’identifier :
+#### Étape 3 — Lien final
 
-* les signalements encore en attente
-* les signalements en cours
-* les objets concernés
-* les coordonnées GPS du mobilier
-
----
-
-## ✅ Livrable 3 — Taux de résolution par trimestre
-
-Vue SQL :
+Une fois que l'intervention et le signalement pointaient tous les deux vers le même mobilier, le `signalement_id` a pu être récupéré via ce pivot commun :
 
 ```sql
-v_taux_resolution
+JOIN signalements s ON s.inventaires_mobiliers_id = im.id
 ```
 
-Cette vue calcule :
-
-* le nombre total de signalements
-* le nombre de signalements résolus
-* le taux de résolution trimestriel
+Un `ROW_NUMBER()` a ensuite été utilisé pour éviter les doublons en cas de plusieurs signalements sur un même mobilier.
 
 ---
 
-# 📈 Résultats observés
+## Analyses produites (`04-briefB.sql`)
 
-Les analyses montrent que certains quartiers présentent des délais de traitement particulièrement élevés.
-
-Plusieurs signalements restent ouverts pendant de longues périodes, ce qui peut indiquer :
-
-* un manque de ressources
-* une surcharge d’interventions
-* des priorités mal réparties
-
-Le suivi trimestriel permet également d’observer l’évolution de l’efficacité des interventions au fil du temps.
+- **Délai moyen et médian par quartier** entre la date de signalement et la date d'intervention
+- **Signalements ouverts depuis plus de 30 jours** (sans intervention associée)
+- **Taux de résolution par trimestre** pour suivre l'évolution de la qualité du service
 
 ---
 
-# 🛠️ Difficultés rencontrées
+## Conclusions
 
-## Gestion des dates
-
-Les formats de dates étaient hétérogènes selon les fichiers CSV.
-
-## Jointures complexes
-
-Certaines relations entre signalements et interventions devaient être reconstituées à partir du lieu et du type d’objet.
-
-## Doublons
-
-Plusieurs lignes correspondaient au même mobilier ou à la même intervention.
-
----
-
-
-# 👩‍💻 Auteur
-
-Projet réalisé dans le cadre du cours de bases de données à l'HEIG-VD.
-
-Auteur : **Justine Stalder & Amira Gassab**
-
----
-
-# 📄 Licence
-
-Projet pédagogique à usage académique uniquement.
-
----
-
-# 📅 Dernière mise à jour
-
-Mai 2026
+- Le mobilier le plus souvent signalé est le **lampadaire**, suivi des **bancs**.
+- Certains quartiers présentent des délais de traitement nettement plus élevés, ce qui peut indiquer une surcharge des équipes ou une concentration d'incidents.
+- Le délai médian est plus représentatif que le délai moyen, car quelques cas exceptionnellement longs tirent la moyenne vers le haut.
+- Des signalements restent ouverts depuis plusieurs mois, principalement concernant des lampadaires et des bancs dans des quartiers périphériques.
+- Le taux de résolution varie selon les trimestres, montrant des périodes de meilleure prise en charge que d'autres.
